@@ -8,10 +8,13 @@ import {
 export default [
   index("routes/_index.tsx"),
   route("login", "routes/login.tsx"),
-  //   index("home/route.tsx"),
-  //   route("about", "about/route.tsx"),
-  //   layout("concerts/layout.tsx", [
-  //     route("trending", "concerts/trending.tsx"),
-  //     route(":city", "concerts/city.tsx"),
-  //   ]),
+
+  layout("routes/notes.tsx", [
+    index("./routes/notes.home.tsx"),
+    route("new", "routes/notes.new.tsx"),
+    route(":noteId", "routes/notes.$noteId.tsx"),
+  ]),
+
+  route("logout", "routes/logout.tsx"),
+  route("healthcheck", "routes/healthcheck.tsx"),
 ] satisfies RouteConfig;

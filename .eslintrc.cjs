@@ -9,6 +9,7 @@ module.exports = {
   root: true,
   rules: {
     "no-unused-vars": "warn",
+    "import/order": "warn",
   },
   parserOptions: {
     ecmaVersion: "latest",
