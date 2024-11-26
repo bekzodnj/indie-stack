@@ -3,10 +3,11 @@ import {
   route,
   layout,
   index,
-} from "@remix-run/route-config";
+} from "@react-router/dev/routes";
 
 export default [
   index("routes/_index.tsx"),
+  route("login", "routes/login.tsx"),
   //   index("home/route.tsx"),
   //   route("about", "about/route.tsx"),
   //   layout("concerts/layout.tsx", [
