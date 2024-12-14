@@ -40,6 +40,18 @@ async function seed() {
     },
   });
 
+  Array.from({ length: 100 }, (_, index) => index + 1).forEach(
+    async (item, index) => {
+      await prisma.note.create({
+        data: {
+          title: `My note - item: ${item}`,
+          body: `Hello, world - index: ${index}!`,
+          userId: user.id,
+        },
+      });
+    },
+  );
+
   console.log(`Database has been seeded. 🌱`);
 }
 
