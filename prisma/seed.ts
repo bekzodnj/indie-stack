@@ -16,6 +16,8 @@ async function seed() {
   const user = await prisma.user.create({
     data: {
       email,
+      name: "Rachel",
+      emailVerified: true,
       password: {
         create: {
           hash: hashedPassword,
@@ -40,17 +42,17 @@ async function seed() {
     },
   });
 
-  Array.from({ length: 100 }, (_, index) => index + 1).forEach(
-    async (item, index) => {
-      await prisma.note.create({
-        data: {
-          title: `My note - item: ${item}`,
-          body: `Hello, world - index: ${index}!`,
-          userId: user.id,
-        },
-      });
-    },
-  );
+  // Array.from({ length: 100 }, (_, index) => index + 1).forEach(
+  //   async (item, index) => {
+  //     await prisma.note.create({
+  //       data: {
+  //         title: `My note - item: ${item}`,
+  //         body: `Hello, world - index: ${index}!`,
+  //         userId: user.id,
+  //       },
+  //     });
+  //   },
+  // );
 
   console.log(`Database has been seeded. 🌱`);
 }
