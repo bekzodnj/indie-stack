@@ -1,16 +1,12 @@
-import type {
-  ActionFunctionArgs,
-  LoaderFunctionArgs,
-  MetaFunction,
-} from "react-router";
-import type { Route } from "./+types/login";
-import { data, redirect } from "react-router";
-import { Form, Link, useActionData, useSearchParams } from "react-router";
 import { useEffect, useRef } from "react";
+import type { LoaderFunctionArgs, MetaFunction } from "react-router";
+import { data, Form, Link, redirect, useSearchParams } from "react-router";
 
 import { verifyLogin } from "~/models/user.server";
 import { createUserSession, getUserId } from "~/session.server";
 import { safeRedirect, validateEmail } from "~/utils";
+
+import type { Route } from "./+types/login";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const userId = await getUserId(request);

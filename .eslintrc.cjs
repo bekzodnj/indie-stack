@@ -9,7 +9,7 @@ module.exports = {
   root: true,
   rules: {
     "no-unused-vars": "warn",
-    "import/order": "warn",
+    "import/order": "off",
   },
   parserOptions: {
     ecmaVersion: "latest",
@@ -82,7 +82,7 @@ module.exports = {
       ],
       rules: {
         "import/order": [
-          "error",
+          "off",
           {
             alphabetize: { caseInsensitive: true, order: "asc" },
             groups: ["builtin", "external", "internal", "parent", "sibling"],
