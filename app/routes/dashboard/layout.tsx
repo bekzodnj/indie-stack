@@ -11,7 +11,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   return { noteListItems };
 };
 
-export default function NotesPage() {
+export default function Layout() {
   const data = useLoaderData<typeof loader>();
   const user = useUser();
 
@@ -36,29 +36,16 @@ export default function NotesPage() {
       <main className="flex h-full bg-white">
         <div className="h-full w-80 border-r bg-gray-50">
           <Link to="new" className="block p-4 text-xl text-blue-500">
-            + New Note
+            Create New Material
+          </Link>
+          <Link to="uploaded" className="block p-4 text-xl text-blue-500">
+            Uploaded Materials
+          </Link>
+          <Link to="saved" className="block p-4 text-xl text-blue-500">
+            Saved Materials
           </Link>
 
           <hr />
-
-          {data.noteListItems.length === 0 ? (
-            <p className="p-4">No notes yet</p>
-          ) : (
-            <ol>
-              {data.noteListItems.map((note) => (
-                <li key={note.id}>
-                  <NavLink
-                    className={({ isActive }) =>
-                      `block border-b p-4 text-xl ${isActive ? "bg-white" : ""}`
-                    }
-                    to={note.id}
-                  >
-                    📝 {note.title}
-                  </NavLink>
-                </li>
-              ))}
-            </ol>
-          )}
         </div>
 
         <div className="flex-1 p-6">

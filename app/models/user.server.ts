@@ -19,6 +19,8 @@ export async function createUser(email: User["email"], password: string) {
   return prisma.user.create({
     data: {
       email,
+      name: email,
+      emailVerified: true, // TODO: Implement email verification
       password: {
         create: {
           hash: hashedPassword,
