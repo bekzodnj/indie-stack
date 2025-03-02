@@ -14,12 +14,18 @@ export default [
     route("test", "routes/test.tsx"),
   ]),
 
+  //dashboard
   route("dashboard", "routes/dashboard/layout.tsx", [
     index("./routes/dashboard/home.tsx"),
     route("new", "routes/dashboard/new.tsx"),
     route(":material", "routes/dashboard/$materialId.tsx"),
     route("created", "routes/dashboard/created.tsx"),
     route("saved", "routes/dashboard/saved.tsx"),
+  ]),
+
+  //upload
+  route("user/:id", "pages/user-profile.tsx", [
+    route("avatar", "api/avatar.tsx"),
   ]),
 
   route("logout", "routes/logout.tsx"),

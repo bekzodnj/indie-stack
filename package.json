@@ -30,6 +30,8 @@
     "@mantine/dropzone": "^7.15.2",
     "@mantine/hooks": "^7.15.2",
     "@mantine/tiptap": "^7.15.2",
+    "@mjackson/file-storage": "^0.6.1",
+    "@mjackson/form-data-parser": "^0.7.0",
     "@prisma/client": "^6.1.0",
     "@react-router/node": "^7.0.0",
     "@react-router/serve": "^7.0.0",

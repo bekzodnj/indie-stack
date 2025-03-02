@@ -11,23 +11,27 @@ import {
   data,
   Form,
   redirect,
+  useLoaderData,
   type ActionFunctionArgs,
   type LoaderFunctionArgs,
 } from "react-router";
-import { createMaterial } from "~/models/material.server";
+import { createMaterial, getCategories } from "~/models/material.server";
 import { requireUserId } from "~/session.server";
 import invariant from "tiny-invariant";
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
-  //await requireUserId(request)
-  return { name: "test" };
-};
+export async function loader({ request }: LoaderFunctionArgs) {
+  const userId = await requireUserId(request);
+  const categories = await getCategories();
+  return data(categories);
+}
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   const userId = await requireUserId(request);
 
   const formData = await request.formData();
   const updates = Object.fromEntries(formData);
+
+  console.log("Updates", updates);
 
   const title = formData.get("title") as string;
   const description = formData.get("description") as string;
@@ -48,6 +52,15 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 };
 
 export default function CreatePage() {
+  const data = useLoaderData<typeof loader>();
+
+  const categoryData = data.map((category) => {
+    return {
+      label: category.name,
+      value: category.id,
+    };
+  });
+
   return (
     <Container size={"sm"}>
       <Form method="post">
@@ -63,7 +76,7 @@ export default function CreatePage() {
           name="categoryId"
           label="What is this page about?"
           placeholder="Pick value or enter anything"
-          data={["Math", "Physics", "Programming", "Other"]}
+          data={categoryData}
           mb="md"
         />
 
