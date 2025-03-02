@@ -18,7 +18,7 @@ export default [
     index("./routes/dashboard/home.tsx"),
     route("new", "routes/dashboard/new.tsx"),
     route(":material", "routes/dashboard/$materialId.tsx"),
-    route("uploaded", "routes/dashboard/uploaded.tsx"),
+    route("created", "routes/dashboard/created.tsx"),
     route("saved", "routes/dashboard/saved.tsx"),
   ]),
 

@@ -23,7 +23,61 @@ model User {
   sessions      Session[]
   accounts      Account[]
 
+  materials     Material[] // Materials created by the user
+  library       Library[]  // Materials saved to user's library
+
+
   @@map("user")
+}
+
+model Material {
+  id  String @id @default(cuid())
+  title String 
+  description String
+  category Category @relation(fields: [categoryId], references: [id])
+  categoryId  String
+  url String?
+  filePath  String? //path to file
+  fileType String? // MIME type
+  fileSize Int? // size in bytes
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  //Relations
+  author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId String
+  savedBy Library[] // users who saved this material
+
+
+  @@map("material")
+}
+
+model Library{
+  id String   @id @default(cuid())
+  user User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  material    Material  @relation(fields: [materialId], references: [id], onDelete: Cascade)
+  materialId    String
+  createdAt  DateTime @default(now())
+  notes   String?   //personal notes for saved material
+
+
+
+  @@unique([userId, materialId]) // Prevent duplicate saves
+  @@map("library")
+
+
+
+
+}
+
+model Category{
+  id  String  @id @default(cuid())
+  name String @unique
+  description String?
+  materials Material[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Password {

@@ -4,7 +4,7 @@ import React from "react";
 const Uploaded: React.FC = () => {
   return (
     <div>
-      <h1>Uploaded Files</h1>
+      <h1>Created Files</h1>
       <p>This is the uploaded files dashboard.</p>
       <Button>Hey there</Button>
     </div>
