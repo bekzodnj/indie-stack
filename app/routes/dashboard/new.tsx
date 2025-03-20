@@ -3,6 +3,8 @@ import {
   Button,
   Checkbox,
   Container,
+  FileInput,
+  Select,
   Textarea,
   TextInput,
 } from "@mantine/core";
@@ -18,6 +20,12 @@ import {
 import { createMaterial, getCategories } from "~/models/material.server";
 import { requireUserId } from "~/session.server";
 import invariant from "tiny-invariant";
+import {
+  fileStorage,
+  getStorageKey,
+  pdfUploadHandler,
+} from "~/server/avatar-storage.server";
+import { FileUpload, parseFormData } from "@mjackson/form-data-parser";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const userId = await requireUserId(request);
@@ -28,17 +36,25 @@ export async function loader({ request }: LoaderFunctionArgs) {
 export const action = async ({ request }: ActionFunctionArgs) => {
   const userId = await requireUserId(request);
 
-  const formData = await request.formData();
-  const updates = Object.fromEntries(formData);
+  const pdfUploadHandler = (fileUpload: FileUpload) => {
+    if (
+      fileUpload.fieldName === "file" &&
+      fileUpload.type === "application/pdf"
+    ) {
+      const storageKey = getStorageKey(userId);
+      fileStorage.set(storageKey, fileUpload);
+      return fileStorage.get(storageKey);
+    }
+  };
 
-  console.log("Updates", updates);
+  const formData = await parseFormData(request, pdfUploadHandler);
+
+  //const updates = Object.fromEntries(formData);
 
   const title = formData.get("title") as string;
   const description = formData.get("description") as string;
   const categoryId = formData.get("categoryId") as string;
   const url = formData.get("url") as string;
-
-  // Validation
 
   const material = await createMaterial({
     title,
@@ -46,6 +62,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     categoryId,
     url: url?.toString() || null,
     userId,
+    filePath: getStorageKey(userId),
   });
 
   return redirect(`/dashboard`);
@@ -61,6 +78,8 @@ export default function CreatePage() {
     };
   });
 
+  console.log("Category Data", data);
+
   return (
     <Container size={"sm"}>
       <Form method="post">
@@ -72,12 +91,13 @@ export default function CreatePage() {
           mb="md"
         />
 
-        <Autocomplete
+        <Select
           name="categoryId"
           label="What is this page about?"
           placeholder="Pick value or enter anything"
           data={categoryData}
           mb="md"
+          searchable
         />
 
         <Textarea
@@ -94,6 +114,13 @@ export default function CreatePage() {
           name="url"
           label="Page link or URL"
           placeholder="Website Link or URL"
+          mb="md"
+        />
+
+        <FileInput
+          name="pdfFile"
+          label="Upload a PDF file"
+          placeholder="PDF file"
           mb="md"
         />
 

@@ -43,15 +43,18 @@ export function createMaterial({
   categoryId,
   url,
   userId,
+  filePath,
 }: Pick<Material, "title" | "description" | "url"> & {
   userId: User["id"];
   categoryId: Category["id"];
+  filePath?: string;
 }) {
   return prisma.material.create({
     data: {
       title,
       description,
       url,
+      filePath,
       category: {
         connect: { id: categoryId },
       },

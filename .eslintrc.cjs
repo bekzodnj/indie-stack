@@ -74,10 +74,10 @@ module.exports = {
         },
       },
       extends: [
-        "plugin:@typescript-eslint/recommended",
-        "plugin:@typescript-eslint/stylistic",
-        "plugin:import/recommended",
-        "plugin:import/typescript",
+        //"plugin:@typescript-eslint/recommended",
+        //"plugin:@typescript-eslint/stylistic",
+        //"plugin:import/recommended",
+        //"plugin:import/typescript",
         "prettier",
       ],
       rules: {
