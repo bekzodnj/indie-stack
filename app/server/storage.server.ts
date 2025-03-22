@@ -5,6 +5,10 @@ export const getStorageKey = (userId: string, materialTitle: string) => {
   return `file-${userId}-${materialTitle}`;
 };
 
+export const getStorageKeyForDownload = (fileKey: string) => {
+  return fileKey;
+};
+
 // export const pdfUploadHandler = (
 //   fileUpload: FileUpload,
 //   userId: string,
