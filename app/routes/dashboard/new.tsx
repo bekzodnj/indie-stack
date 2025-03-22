@@ -3,7 +3,9 @@ import {
   Checkbox,
   Container,
   FileInput,
+  SegmentedControl,
   Select,
+  Text,
   Textarea,
   TextInput,
 } from "@mantine/core";
@@ -20,6 +22,7 @@ import { createMaterial, getCategories } from "~/models/material.server";
 import { requireUserId } from "~/session.server";
 import { fileStorage, getStorageKey } from "~/server/storage.server";
 import { FileUpload, parseFormData } from "@mjackson/form-data-parser";
+import { useState } from "react";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   await requireUserId(request);
@@ -68,6 +71,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
 export default function CreatePage() {
   const data = useLoaderData<typeof loader>();
+  const [value, setValue] = useState("url");
 
   const categoryData = data.map((category) => {
     return {
@@ -108,21 +112,46 @@ export default function CreatePage() {
           mb="md"
         />
 
-        <TextInput
-          withAsterisk
-          name="url"
-          label="Page link or URL"
-          placeholder="Website Link or URL"
-          mb="md"
+        <SegmentedControl
+          value={value}
+          onChange={setValue}
+          mb={"sm"}
+          data={[
+            { label: "URL", value: "url" },
+            { label: "File", value: "file" },
+          ]}
         />
 
-        <FileInput
-          name="fileAttachment"
-          label="Upload a PDF file"
-          placeholder="Upload pdf, jpg, or png files"
-          mb="md"
-          accept="application/pdf, image/jpeg, image/png"
-        />
+        {value === "url" ? (
+          <TextInput
+            required={value === "url"}
+            name="url"
+            label="Page link or URL"
+            placeholder="Website Link or URL"
+            mb="md"
+          />
+        ) : (
+          // <FileInput
+          // required={true}
+          // name="fileAttachment"
+          // label="Upload a PDF file"
+          // placeholder="Upload pdf, jpg, or png files"
+          // mb="md"
+          // accept="application/pdf, image/jpeg, image/png"
+          // />
+
+          <Container mb="xl">
+            <Text>Upload a PDF file</Text>
+            <input
+              type="file"
+              id="fileAttachment"
+              required={true}
+              name="fileAttachment"
+              placeholder="Upload pdf, jpg, or png files"
+              accept="application/pdf, image/jpeg, image/png"
+            />
+          </Container>
+        )}
 
         <Checkbox mb="md" name="isPublished" label="Publish the page" />
 

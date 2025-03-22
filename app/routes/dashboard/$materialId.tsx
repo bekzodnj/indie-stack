@@ -26,15 +26,6 @@ export default function MaterialDetails({
           </Badge>
         </Group>
 
-        {/* {material.filePath && (
-          <Image
-            src={material.filePath}
-            alt={material.title}
-            height={160}
-            withPlaceholder
-          />
-        )} */}
-
         <Text size="sm" mt="xs">
           {material?.description}
         </Text>

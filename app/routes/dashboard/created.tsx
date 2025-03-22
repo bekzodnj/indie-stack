@@ -1,12 +1,4 @@
-import {
-  Badge,
-  Button,
-  Card,
-  Group,
-  Image,
-  SimpleGrid,
-  Text,
-} from "@mantine/core";
+import { Badge, Button, Card, Group, SimpleGrid, Text } from "@mantine/core";
 import { Link } from "react-router";
 
 import { getMaterialListItems } from "~/models/material.server";
@@ -45,9 +37,7 @@ export default function MaterialList({ loaderData }: Route.ComponentProps) {
               <Badge color="teal">{material.category.name}</Badge>
             </Group>
 
-            <Text size="sm" color="dimmed">
-              {material.description}
-            </Text>
+            <Text size="sm">{material.description}</Text>
 
             <Link to={`/dashboard/${material.id}`}>
               <Button
