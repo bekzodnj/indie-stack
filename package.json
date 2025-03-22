@@ -16,7 +16,7 @@
     "test:e2e:dev": "start-server-and-test dev http://localhost:3000 \"npx cypress open\"",
     "pretest:e2e:run": "npm run build",
     "test:e2e:run": "cross-env PORT=8811 start-server-and-test start:mocks http://localhost:8811 \"npx cypress run\"",
-    "typecheck": "tsc && tsc -p cypress",
+    "typecheck": "react-router typegen && tsc",
     "validate": "npm-run-all --parallel \"test -- --run\" lint typecheck test:e2e:run"
   },
   "eslintIgnore": [
@@ -32,7 +32,7 @@
     "@mantine/tiptap": "^7.15.2",
     "@mjackson/file-storage": "^0.6.1",
     "@mjackson/form-data-parser": "^0.7.0",
-    "@prisma/client": "^6.1.0",
+    "@prisma/client": "^6.5.0",
     "@react-router/node": "^7.3.0",
     "@react-router/serve": "^7.3.0",
     "@tiptap/extension-link": "^2.10.4",

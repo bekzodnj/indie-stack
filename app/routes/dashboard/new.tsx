@@ -18,11 +18,11 @@ import {
 } from "react-router";
 import { createMaterial, getCategories } from "~/models/material.server";
 import { requireUserId } from "~/session.server";
-import { fileStorage, getStorageKey } from "~/server/avatar-storage.server";
+import { fileStorage, getStorageKey } from "~/server/storage.server";
 import { FileUpload, parseFormData } from "@mjackson/form-data-parser";
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  const userId = await requireUserId(request);
+  await requireUserId(request);
   const categories = await getCategories();
   return data(categories);
 }
@@ -31,16 +31,20 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const userId = await requireUserId(request);
 
   const cloneReq = request.clone();
-  const materialTitle = (await cloneReq.formData()).get("title");
+  const formDataCopy = await cloneReq.formData();
+  const fileAttachment = formDataCopy.get("fileAttachment") as File | undefined;
 
-  const pdfUploadHandler = (fileUpload: FileUpload) => {
+  let fileName = fileAttachment?.name.replace(/\s+/g, "_") || "default";
+
+  const pdfUploadHandler = async (fileUpload: FileUpload) => {
     if (
-      fileUpload.fieldName === "file" &&
-      fileUpload.type === "application/pdf"
+      fileUpload.fieldName === "fileAttachment" &&
+      ["application/pdf", "image/jpeg", "image/png"].includes(fileUpload.type)
     ) {
-      const storageKey = getStorageKey(userId, materialTitle as string);
-      fileStorage.set(storageKey, fileUpload);
-      return fileStorage.get(storageKey);
+      console.log("in there", fileUpload);
+      const storageKey = getStorageKey(userId, fileName as string);
+      await fileStorage.set(storageKey, fileUpload);
+      console.log("processed:", fileStorage.get(storageKey));
     }
   };
 
@@ -57,7 +61,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     categoryId,
     url: url?.toString() || null,
     userId,
-    filePath: getStorageKey(userId, materialTitle as string),
+    filePath: getStorageKey(userId, fileName as string),
   });
 
   return redirect(`/dashboard`);
@@ -73,11 +77,9 @@ export default function CreatePage() {
     };
   });
 
-  console.log("Category Data", data);
-
   return (
     <Container size={"sm"}>
-      <Form method="post">
+      <Form method="POST" encType="multipart/form-data">
         <TextInput
           required
           withAsterisk
@@ -116,10 +118,11 @@ export default function CreatePage() {
         />
 
         <FileInput
-          name="pdfFile"
+          name="fileAttachment"
           label="Upload a PDF file"
-          placeholder="PDF file"
+          placeholder="Upload pdf, jpg, or png files"
           mb="md"
+          accept="application/pdf, image/jpeg, image/png"
         />
 
         <Checkbox mb="md" name="isPublished" label="Publish the page" />

@@ -37,6 +37,7 @@ model Material {
   category Category @relation(fields: [categoryId], references: [id])
   categoryId  String
   url String?
+  thumbnailFilePath String?
   filePath  String? //path to file
   fileType String? // MIME type
   fileSize Int? // size in bytes

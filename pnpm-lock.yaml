@@ -30,7 +30,7 @@ importers:
         specifier: ^0.7.0
         version: 0.7.0
       '@prisma/client':
-        specifier: ^6.1.0
+        specifier: ^6.5.0
         version: 6.5.0(prisma@6.5.0(typescript@5.8.2))(typescript@5.8.2)
       '@react-router/node':
         specifier: ^7.3.0

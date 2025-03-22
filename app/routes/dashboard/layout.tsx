@@ -15,7 +15,6 @@ export default function Layout() {
   const data = useLoaderData<typeof loader>();
   const user = useUser();
 
-  console.log("User", user);
   return (
     <div className="flex h-full min-h-screen flex-col">
       <header className="flex items-center justify-between bg-slate-800 p-4 text-white">
@@ -38,8 +37,8 @@ export default function Layout() {
           <Link to="new" className="block p-4 text-xl text-blue-500">
             Create New Material
           </Link>
-          <Link to="uploaded" className="block p-4 text-xl text-blue-500">
-            Uploaded Materials
+          <Link to="created" className="block p-4 text-xl text-blue-500">
+            My Materials
           </Link>
           <Link to="saved" className="block p-4 text-xl text-blue-500">
             Saved Materials

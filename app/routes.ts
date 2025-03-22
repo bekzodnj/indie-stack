@@ -23,11 +23,6 @@ export default [
     route("saved", "routes/dashboard/saved.tsx"),
   ]),
 
-  //upload
-  route("user/:id", "pages/user-profile.tsx", [
-    route("avatar", "api/avatar.tsx"),
-  ]),
-
   route("logout", "routes/logout.tsx"),
   route("join", "routes/join.tsx"),
   route("healthcheck", "routes/healthcheck.tsx"),

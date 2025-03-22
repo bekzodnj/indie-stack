@@ -28,6 +28,9 @@ export function getMaterialListItems({ userId }: { userId: User["id"] }) {
     select: {
       id: true,
       title: true,
+      url: true,
+      description: true,
+      filePath: true,
       category: { select: { name: true } },
       createdAt: true,
     },
