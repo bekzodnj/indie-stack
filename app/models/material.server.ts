@@ -14,10 +14,12 @@ export function getMaterial({
       id,
       OR: [{ authorId: userId }, { savedBy: { some: { userId } } }],
     },
-    include: {
-      category: {
-        select: { name: true },
-      },
+    select: {
+      title: true,
+      url: true,
+      description: true,
+      filePath: true,
+      category: { select: { name: true } },
     },
   });
 }

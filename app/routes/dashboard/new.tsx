@@ -41,7 +41,6 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       fileUpload.fieldName === "fileAttachment" &&
       ["application/pdf", "image/jpeg", "image/png"].includes(fileUpload.type)
     ) {
-      console.log("in there", fileUpload);
       const storageKey = getStorageKey(userId, fileName as string);
       await fileStorage.set(storageKey, fileUpload);
       console.log("processed:", fileStorage.get(storageKey));

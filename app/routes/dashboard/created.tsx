@@ -7,6 +7,7 @@ import {
   SimpleGrid,
   Text,
 } from "@mantine/core";
+import { Link } from "react-router";
 
 import { getMaterialListItems } from "~/models/material.server";
 import { requireUserId } from "~/session.server";
@@ -39,14 +40,6 @@ export default function MaterialList({ loaderData }: Route.ComponentProps) {
             radius="md"
             withBorder
           >
-            <Card.Section>
-              <Image
-                src={"https://via.placeholder.com/150"}
-                height={160}
-                alt={material.title}
-              />
-            </Card.Section>
-
             <Group mt="md" mb="xs">
               <Text>{material.title}</Text>
               <Badge color="teal">{material.category.name}</Badge>
@@ -56,18 +49,17 @@ export default function MaterialList({ loaderData }: Route.ComponentProps) {
               {material.description}
             </Text>
 
-            <Button
-              variant="light"
-              color="blue"
-              fullWidth
-              mt="md"
-              radius="md"
-              component="a"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              View Material
-            </Button>
+            <Link to={`/dashboard/${material.id}`}>
+              <Button
+                variant="light"
+                color="blue"
+                fullWidth
+                mt="md"
+                radius="md"
+              >
+                View Material
+              </Button>
+            </Link>
           </Card>
         ))}
       </SimpleGrid>
