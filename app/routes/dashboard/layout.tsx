@@ -1,5 +1,6 @@
 import type { LoaderFunctionArgs } from "react-router";
 import { Form, Link, NavLink, Outlet, useLoaderData } from "react-router";
+import { Badge, NavLink as NavLinkMantine } from "@mantine/core";
 
 import { getNoteListItems } from "~/models/note.server";
 import { requireUserId } from "~/session.server";
@@ -34,15 +35,32 @@ export default function Layout() {
 
       <main className="flex h-full bg-white">
         <div className="h-full w-80 border-r bg-gray-50">
-          <Link to="new" className="block p-4 text-xl text-blue-500">
+          <NavLink
+            className={({ isActive }) =>
+              `block border-b p-5 text-xl ${isActive ? "bg-white" : ""}`
+            }
+            to={"new"}
+          >
             Create New Material
-          </Link>
-          <Link to="created" className="block p-4 text-xl text-blue-500">
+          </NavLink>
+
+          <NavLink
+            className={({ isActive }) =>
+              `block border-b p-5 text-xl ${isActive ? "bg-white" : ""}`
+            }
+            to={"created"}
+          >
             My Materials
-          </Link>
-          <Link to="saved" className="block p-4 text-xl text-blue-500">
+          </NavLink>
+
+          <NavLink
+            className={({ isActive }) =>
+              `block border-b p-5 text-xl ${isActive ? "bg-white" : ""}`
+            }
+            to={"saved"}
+          >
             Saved Materials
-          </Link>
+          </NavLink>
 
           <hr />
         </div>
