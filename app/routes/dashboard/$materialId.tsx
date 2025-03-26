@@ -34,8 +34,8 @@ export default function MaterialDetails({ loaderData }: Route.ComponentProps) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Button variant="light" color="blue" fullWidth mt="md" radius="md">
-              Download Material
+            <Button variant="light" color="blue" mt="md" radius="md">
+              <Text mr="xs">📋</Text> <span>Open Material</span>
             </Button>
           </Link>
         ) : null}

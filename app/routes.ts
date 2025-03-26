@@ -5,6 +5,8 @@ export default [
 
   // new sign-in
   route("signup", "routes/auth/signup.tsx"),
+  route("signin", "routes/auth/signin.tsx"),
+  route("protected", "routes/auth/protected.tsx"),
   route("login", "routes/login.tsx"),
 
   route("notes", "routes/notes.tsx", [

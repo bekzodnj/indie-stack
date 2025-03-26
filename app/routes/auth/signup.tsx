@@ -1,5 +1,7 @@
 import { Button, PasswordInput, TextInput } from "@mantine/core";
 import { useState } from "react";
+import { redirect } from "react-router";
+
 import { authClient } from "~/lib/auth-client";
 
 export default function SignUp() {
@@ -20,6 +22,7 @@ export default function SignUp() {
         },
         onSuccess: (ctx) => {
           //redirect to the dashboard
+          redirect("/dashboard");
         },
         onError: (ctx) => {
           alert(ctx.error.message);

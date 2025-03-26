@@ -5,7 +5,14 @@ import { getUser } from "~/session.server";
 import stylesheet from "~/tailwind.css?url";
 import "@mantine/core/styles.css";
 import "@mantine/dropzone/styles.css";
-import { ColorSchemeScript, MantineProvider } from "@mantine/core";
+import {
+  Button,
+  ColorSchemeScript,
+  createTheme,
+  MantineProvider,
+  type MantineTheme,
+} from "@mantine/core";
+import GlobalStyles from "./globals.module.css";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -14,6 +21,13 @@ export const links: LinksFunction = () => [
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   return { user: await getUser(request) };
 };
+
+const myTheme = createTheme({
+  primaryColor: "indigo",
+  components: {
+    Button: {},
+  },
+});
 
 export default function App() {
   return (
@@ -26,7 +40,7 @@ export default function App() {
         <ColorSchemeScript />
       </head>
       <body className="h-full">
-        <MantineProvider>
+        <MantineProvider theme={myTheme}>
           <Outlet />
           <ScrollRestoration />
           <Scripts />
