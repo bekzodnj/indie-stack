@@ -12,6 +12,7 @@ import { createUserSession, getUserId } from "~/session.server";
 import { safeRedirect, validateEmail } from "~/utils";
 import { auth } from "~/lib/auth";
 import { useSession } from "~/lib/auth-client";
+import { GoogleSignInBtn } from "~/components/GoogleSignInBtn";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const userId = await getUserId(request);
@@ -22,6 +23,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 export const action = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
   const email = formData.get("email") as string;
+  const username = formData.get("username") as string;
   const password = formData.get("password");
   const redirectTo = safeRedirect(formData.get("redirectTo"), "/");
 
@@ -46,22 +48,22 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     );
   }
 
-  const existingUser = await getUserByEmail(email);
-  if (existingUser) {
-    return data(
-      {
-        errors: {
-          email: "A user already exists with this email",
-          password: null,
-        },
-      },
-      { status: 400 },
-    );
-  }
+  // const existingUser = await getUserByEmail(email);
+  // if (existingUser) {
+  //   return data(
+  //     {
+  //       errors: {
+  //         email: "A user already exists with this email",
+  //         password: null,
+  //       },
+  //     },
+  //     { status: 400 },
+  //   );
+  // }
 
   const response = await auth.api.signUpEmail({
     body: {
-      name: "better-auth-demo",
+      name: username,
       email,
       password,
     },
@@ -124,6 +126,27 @@ export default function Join() {
         <form method="post" className="space-y-6">
           <div>
             <label
+              htmlFor="username"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Name
+            </label>
+            <div className="mt-1">
+              <input
+                id="username"
+                required
+                placeholder="Display name"
+                // eslint-disable-next-line jsx-a11y/no-autofocus
+                autoFocus={true}
+                name="username"
+                type="text"
+                className="text-md w-full rounded border border-gray-500 px-2 py-1"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label
               htmlFor="email"
               className="block text-sm font-medium text-gray-700"
             >
@@ -133,6 +156,7 @@ export default function Join() {
               <input
                 ref={emailRef}
                 id="email"
+                placeholder="@example.com"
                 required
                 // eslint-disable-next-line jsx-a11y/no-autofocus
                 autoFocus={true}
@@ -141,11 +165,13 @@ export default function Join() {
                 autoComplete="email"
                 aria-invalid={actionData?.errors?.email ? true : undefined}
                 aria-describedby="email-error"
-                className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
+                className="text-md w-full rounded border border-gray-500 px-2 py-1"
               />
-              {actionData?.errors?.email ? (
+              {/* @ts-ignore */}
+              {actionData?.message ? (
                 <div className="pt-1 text-red-700" id="email-error">
-                  {actionData.errors.email}
+                  {/* @ts-ignore */}
+                  {actionData?.message}
                 </div>
               ) : null}
             </div>
@@ -161,13 +187,14 @@ export default function Join() {
             <div className="mt-1">
               <input
                 id="password"
+                placeholder="min 8 characters"
                 ref={passwordRef}
                 name="password"
                 type="password"
                 autoComplete="new-password"
                 aria-invalid={actionData?.errors?.password ? true : undefined}
                 aria-describedby="password-error"
-                className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
+                className="text-md w-full rounded border border-gray-500 px-2 py-1"
               />
               {actionData?.errors?.password ? (
                 <div className="pt-1 text-red-700" id="password-error">
@@ -199,6 +226,16 @@ export default function Join() {
             </div>
           </div>
         </form>
+
+        <div className="mt-6 flex items-center justify-center">
+          <div className="h-0.5 w-full bg-gray-300" />
+          <div className="absolute rounded-full bg-white px-2 text-sm text-gray-500">
+            Or continue with
+          </div>
+        </div>
+        <div className="mt-6 flex items-center justify-center">
+          <GoogleSignInBtn />
+        </div>
       </div>
     </div>
   );

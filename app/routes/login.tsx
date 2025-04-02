@@ -16,6 +16,7 @@ import { safeRedirect, validateEmail } from "~/utils";
 import type { Route } from "./+types/login";
 import { auth } from "~/lib/auth";
 import { useSession } from "~/lib/auth-client";
+import { GoogleSignInBtn } from "~/components/GoogleSignInBtn";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const session = await auth.api.getSession({
@@ -25,6 +26,8 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   if (session) {
     return redirect("/protected");
   }
+
+  console.log("Session", session);
 
   return {};
 };
@@ -208,6 +211,16 @@ export default function LoginPage({ actionData }: Route.ComponentProps) {
             </div>
           </div>
         </Form>
+
+        <div className="mt-6 flex items-center justify-center">
+          <div className="h-0.5 w-full bg-gray-300" />
+          <div className="absolute rounded-full bg-white px-2 text-sm text-gray-500">
+            Or continue with
+          </div>
+        </div>
+        <div className="mt-6 flex items-center justify-center">
+          <GoogleSignInBtn />
+        </div>
       </div>
     </div>
   );
