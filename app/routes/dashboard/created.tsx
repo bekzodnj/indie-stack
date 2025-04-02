@@ -2,12 +2,12 @@ import { Badge, Button, Card, Group, SimpleGrid, Text } from "@mantine/core";
 import { Link } from "react-router";
 
 import { getMaterialListItems } from "~/models/material.server";
-import { requireUserId } from "~/session.server";
+import { requireUserId, requireUserIdWithRedirect } from "~/session.server";
 import { Route } from "./+types/created";
 
 export async function loader({ request }: Route.LoaderArgs) {
-  const userId = await requireUserId(request);
-  const materials = await getMaterialListItems({ userId });
+  const user = await requireUserIdWithRedirect(request);
+  const materials = await getMaterialListItems({ userId: user.id });
   return { materials };
 }
 

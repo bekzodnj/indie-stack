@@ -1,20 +1,30 @@
 import type { LoaderFunctionArgs } from "react-router";
-import { Form, Link, NavLink, Outlet, useLoaderData } from "react-router";
-import { Badge, NavLink as NavLinkMantine } from "@mantine/core";
+import {
+  Form,
+  Link,
+  NavLink,
+  Outlet,
+  redirect,
+  useLoaderData,
+  useNavigate,
+} from "react-router";
 
 import { getNoteListItems } from "~/models/note.server";
-import { requireUserId } from "~/session.server";
-import { useUser } from "~/utils";
+import { requireUserIdWithRedirect } from "~/session.server";
+
+import { authClient } from "~/lib/auth-client";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const userId = await requireUserId(request);
-  const noteListItems = await getNoteListItems({ userId });
-  return { noteListItems };
+  const user = await requireUserIdWithRedirect(request);
+  // const userId = await requireUserId(request);
+
+  const noteListItems = await getNoteListItems({ userId: user.id });
+  return { user, noteListItems };
 };
 
 export default function Layout() {
   const data = useLoaderData<typeof loader>();
-  const user = useUser();
+  let navigate = useNavigate();
 
   return (
     <div className="flex h-full min-h-screen flex-col">
@@ -22,15 +32,22 @@ export default function Layout() {
         <h1 className="text-3xl font-bold">
           <Link to=".">Udenote</Link>
         </h1>
-        <p>{user.email}</p>
-        <Form action="/logout" method="post">
-          <button
-            type="submit"
-            className="rounded bg-slate-600 px-4 py-2 text-blue-100 hover:bg-blue-500 active:bg-blue-600"
-          >
-            Logout
-          </button>
-        </Form>
+        <p>{data.user.name}</p>
+
+        <button
+          className="rounded bg-slate-600 px-4 py-2 text-blue-100 hover:bg-blue-500 active:bg-blue-600"
+          onClick={() =>
+            authClient.signOut({
+              fetchOptions: {
+                onSuccess: () => {
+                  navigate("/signin");
+                },
+              },
+            })
+          }
+        >
+          Log out
+        </button>
       </header>
 
       <main className="flex h-full bg-white">

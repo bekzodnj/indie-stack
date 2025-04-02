@@ -19,19 +19,19 @@ import {
   type LoaderFunctionArgs,
 } from "react-router";
 import { createMaterial, getCategories } from "~/models/material.server";
-import { requireUserId } from "~/session.server";
+import { requireUserId, requireUserIdWithRedirect } from "~/session.server";
 import { fileStorage, getStorageKey } from "~/server/storage.server";
 import { FileUpload, parseFormData } from "@mjackson/form-data-parser";
 import { useState } from "react";
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  await requireUserId(request);
+  await requireUserIdWithRedirect(request);
   const categories = await getCategories();
   return data(categories);
 }
 
 export const action = async ({ request }: ActionFunctionArgs) => {
-  const userId = await requireUserId(request);
+  const user = await requireUserIdWithRedirect(request);
 
   const cloneReq = request.clone();
   const formDataCopy = await cloneReq.formData();
@@ -44,7 +44,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       fileUpload.fieldName === "fileAttachment" &&
       ["application/pdf", "image/jpeg", "image/png"].includes(fileUpload.type)
     ) {
-      const storageKey = getStorageKey(userId, fileName as string);
+      const storageKey = getStorageKey(user.id, fileName as string);
       await fileStorage.set(storageKey, fileUpload);
       console.log("processed:", fileStorage.get(storageKey));
     }
@@ -62,8 +62,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     description,
     categoryId,
     url: url?.toString() || null,
-    userId,
-    filePath: getStorageKey(userId, fileName as string),
+    userId: user.id,
+    filePath: getStorageKey(user.id, fileName as string),
   });
 
   return redirect(`/dashboard`);

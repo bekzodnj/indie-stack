@@ -3,6 +3,7 @@ import invariant from "tiny-invariant";
 
 import type { User } from "~/models/user.server";
 import { getUserById } from "~/models/user.server";
+import { auth } from "./lib/auth";
 
 invariant(process.env.SESSION_SECRET, "SESSION_SECRET must be set");
 
@@ -54,6 +55,23 @@ export async function requireUserId(
   return userId;
 }
 
+export async function requireUserIdWithRedirect(
+  request: Request,
+  redirectTo: string = new URL(request.url).pathname,
+) {
+  const session = await auth.api.getSession({
+    headers: request.headers, //some endpoint might require headers
+  });
+  const userId = session?.user?.id;
+
+  if (!userId) {
+    const searchParams = new URLSearchParams([["redirectTo", redirectTo]]);
+    throw redirect(`/login?${searchParams}`);
+  }
+
+  return session.user;
+}
+
 export async function requireUser(request: Request) {
   const userId = await requireUserId(request);
 
@@ -83,15 +101,6 @@ export async function createUserSession({
           ? 60 * 60 * 24 * 7 // 7 days
           : undefined,
       }),
-    },
-  });
-}
-
-export async function logout(request: Request) {
-  const session = await getSession(request);
-  return redirect("/", {
-    headers: {
-      "Set-Cookie": await sessionStorage.destroySession(session),
     },
   });
 }

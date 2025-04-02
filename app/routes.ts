@@ -27,7 +27,6 @@ export default [
     route("saved", "routes/dashboard/saved.tsx"),
   ]),
 
-  route("logout", "routes/logout.tsx"),
   route("healthcheck", "routes/healthcheck.tsx"),
 
   route("api/auth/*", "routes/api/auth.tsx"),

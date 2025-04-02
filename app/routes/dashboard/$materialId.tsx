@@ -1,13 +1,15 @@
 import { getMaterial } from "~/models/material.server";
 import { Route } from "./+types/$materialId";
-import { requireUserId } from "~/session.server";
+import { requireUserId, requireUserIdWithRedirect } from "~/session.server";
 import { Anchor, Badge, Button, Card, Group, Image, Text } from "@mantine/core";
 import { Link } from "react-router";
 
 export async function loader({ params, request }: Route.LoaderArgs) {
-  const userId = await requireUserId(request);
-  const material = await getMaterial({ id: params.materialId, userId: userId });
-
+  const user = await requireUserIdWithRedirect(request);
+  const material = await getMaterial({
+    id: params.materialId,
+    userId: user.id,
+  });
   return { material };
 }
 
@@ -41,14 +43,14 @@ export default function MaterialDetails({ loaderData }: Route.ComponentProps) {
         ) : null}
 
         {material?.url ? (
-          <Anchor
-            href={material.url || ""}
+          <Link
+            to={material.url || ""}
+            reloadDocument
             target="_blank"
             rel="noopener noreferrer"
-            mt="md"
           >
             Visit Resource
-          </Anchor>
+          </Link>
         ) : null}
       </Card>
     </>
