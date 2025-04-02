@@ -12,6 +12,7 @@ export const auth = betterAuth({
     async sendResetPassword(data, request) {
       // Send an email to the user with a link to reset their password
     },
+    autoSignIn: true,
   },
   socialProviders: {
     google: {

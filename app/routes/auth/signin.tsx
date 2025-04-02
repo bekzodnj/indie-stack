@@ -21,8 +21,6 @@ export async function loader({ request }: Route.LoaderArgs) {
   if (session) {
     return redirect("/protected");
   }
-
-  console.log("Session", session);
 }
 
 export async function action({ request }: Route.ActionArgs) {

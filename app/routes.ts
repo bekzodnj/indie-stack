@@ -4,7 +4,7 @@ export default [
   index("routes/_index.tsx"),
 
   // new sign-in
-  route("signup", "routes/auth/signup.tsx"),
+  route("join", "routes/join.tsx"),
   route("signin", "routes/auth/signin.tsx"),
   route("protected", "routes/auth/protected.tsx"),
   route("login", "routes/login.tsx"),
@@ -28,7 +28,6 @@ export default [
   ]),
 
   route("logout", "routes/logout.tsx"),
-  route("join", "routes/join.tsx"),
   route("healthcheck", "routes/healthcheck.tsx"),
 
   route("api/auth/*", "routes/api/auth.tsx"),

@@ -3,13 +3,15 @@ import type {
   LoaderFunctionArgs,
   MetaFunction,
 } from "react-router";
-import { redirect, data } from "react-router";
+import { redirect, data, useNavigate } from "react-router";
 import { Form, Link, useActionData, useSearchParams } from "react-router";
 import { useEffect, useRef } from "react";
 
 import { createUser, getUserByEmail } from "~/models/user.server";
 import { createUserSession, getUserId } from "~/session.server";
 import { safeRedirect, validateEmail } from "~/utils";
+import { auth } from "~/lib/auth";
+import { useSession } from "~/lib/auth-client";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const userId = await getUserId(request);
@@ -19,7 +21,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
-  const email = formData.get("email");
+  const email = formData.get("email") as string;
   const password = formData.get("password");
   const redirectTo = safeRedirect(formData.get("redirectTo"), "/");
 
@@ -57,14 +59,27 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     );
   }
 
-  const user = await createUser(email, password);
-
-  return createUserSession({
-    redirectTo,
-    remember: false,
-    request,
-    userId: user.id,
+  const response = await auth.api.signUpEmail({
+    body: {
+      name: "better-auth-demo",
+      email,
+      password,
+    },
+    asResponse: true, // returns a response object instead of data
   });
+
+  console.log("Response", response);
+
+  return response;
+
+  // const user = await createUser(email, password);
+
+  // return createUserSession({
+  //   redirectTo,
+  //   remember: false,
+  //   request,
+  //   userId: user.id,
+  // });
 };
 
 export const meta: MetaFunction = () => [{ title: "Sign Up" }];
@@ -75,6 +90,15 @@ export default function Join() {
   const actionData = useActionData<typeof action>();
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
+
+  const session = useSession();
+
+  useEffect(() => {
+    if (session.data) {
+      navigate("/protected");
+    }
+  }, [session]);
 
   useEffect(() => {
     if (actionData?.errors?.email) {
@@ -84,10 +108,20 @@ export default function Join() {
     }
   }, [actionData]);
 
+  if (session.isPending) {
+    return (
+      <div className="flex min-h-full flex-col justify-center">
+        <div className="mx-auto w-full max-w-md px-8">
+          <p>Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex min-h-full flex-col justify-center">
       <div className="mx-auto w-full max-w-md px-8">
-        <Form method="post" className="space-y-6">
+        <form method="post" className="space-y-6">
           <div>
             <label
               htmlFor="email"
@@ -164,7 +198,7 @@ export default function Join() {
               </Link>
             </div>
           </div>
-        </Form>
+        </form>
       </div>
     </div>
   );

@@ -6,13 +6,11 @@ import stylesheet from "~/tailwind.css?url";
 import "@mantine/core/styles.css";
 import "@mantine/dropzone/styles.css";
 import {
-  Button,
   ColorSchemeScript,
   createTheme,
   MantineProvider,
   type MantineTheme,
 } from "@mantine/core";
-import GlobalStyles from "./globals.module.css";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },

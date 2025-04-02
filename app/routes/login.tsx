@@ -1,16 +1,31 @@
 import { useEffect, useRef } from "react";
 import type { LoaderFunctionArgs, MetaFunction } from "react-router";
-import { data, Form, Link, redirect, useSearchParams } from "react-router";
+import {
+  data,
+  Form,
+  Link,
+  redirect,
+  useNavigate,
+  useSearchParams,
+} from "react-router";
 
 import { verifyLogin } from "~/models/user.server";
 import { createUserSession, getUserId } from "~/session.server";
 import { safeRedirect, validateEmail } from "~/utils";
 
 import type { Route } from "./+types/login";
+import { auth } from "~/lib/auth";
+import { useSession } from "~/lib/auth-client";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const userId = await getUserId(request);
-  if (userId) return redirect("/");
+  const session = await auth.api.getSession({
+    headers: request.headers,
+  });
+
+  if (session) {
+    return redirect("/protected");
+  }
+
   return {};
 };
 
@@ -23,14 +38,16 @@ export const action = async ({ request }: Route.ActionArgs) => {
 
   if (!validateEmail(email)) {
     return data(
-      { errors: { email: "Email is invalid", password: null } },
+      { errors: { email: "Email is invalid", password: null }, message: "" },
       { status: 400 },
     );
   }
 
   if (typeof password !== "string" || password.length === 0) {
     return data(
-      { errors: { email: null, password: "Password is required" } },
+      {
+        errors: { email: null, password: "Password is required" },
+      },
       { status: 400 },
     );
   }
@@ -42,21 +59,15 @@ export const action = async ({ request }: Route.ActionArgs) => {
     );
   }
 
-  const user = await verifyLogin(email, password);
-
-  if (!user) {
-    return data(
-      { errors: { email: "Invalid email or password", password: null } },
-      { status: 400 },
-    );
-  }
-
-  return createUserSession({
-    redirectTo,
-    remember: remember === "on" ? true : false,
-    request,
-    userId: user.id,
+  const response = await auth.api.signInEmail({
+    body: {
+      email,
+      password,
+    },
+    asResponse: true, // returns a response object instead of data
   });
+
+  return response;
 };
 
 export const meta: MetaFunction = () => [{ title: "Login" }];
@@ -67,6 +78,15 @@ export default function LoginPage({ actionData }: Route.ComponentProps) {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
+  const navigate = useNavigate();
+  const session = useSession();
+
+  useEffect(() => {
+    if (session.data) {
+      navigate("/protected");
+    }
+  }, [session]);
+
   useEffect(() => {
     if (actionData?.errors?.email) {
       emailRef.current?.focus();
@@ -74,6 +94,16 @@ export default function LoginPage({ actionData }: Route.ComponentProps) {
       passwordRef.current?.focus();
     }
   }, [actionData]);
+
+  if (session.isPending) {
+    return (
+      <div className="flex min-h-full flex-col justify-center">
+        <div className="mx-auto w-full max-w-md px-8">
+          <p>Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-full flex-col justify-center">
@@ -103,6 +133,14 @@ export default function LoginPage({ actionData }: Route.ComponentProps) {
               {actionData?.errors?.email ? (
                 <div className="pt-1 text-red-700" id="email-error">
                   {actionData.errors.email}
+                </div>
+              ) : null}
+
+              {/* @ts-ignore */}
+              {actionData?.message ? (
+                <div className="pt-1 text-red-700" id="email-error">
+                  {/* @ts-ignore */}
+                  {actionData?.message}
                 </div>
               ) : null}
             </div>
