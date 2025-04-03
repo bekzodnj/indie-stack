@@ -19,7 +19,7 @@ export async function loader({ request }: Route.LoaderArgs) {
   });
 
   if (session) {
-    return redirect("/protected");
+    return redirect("/dashboard");
   }
 }
 

@@ -13,7 +13,7 @@ export function GoogleSignInBtn() {
        * a url to redirect after the user authenticates with the provider
        * @default "/"
        */
-      callbackURL: "/protected",
+      callbackURL: "/dashboard",
       /**
        * a url to redirect if an error occurs during the sign in process
        */

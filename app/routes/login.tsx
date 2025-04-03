@@ -24,7 +24,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   });
 
   if (session) {
-    return redirect("/protected");
+    return redirect("/dashboard");
   }
 
   console.log("Session", session);

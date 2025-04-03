@@ -40,7 +40,7 @@ export default function Layout() {
             authClient.signOut({
               fetchOptions: {
                 onSuccess: () => {
-                  navigate("/signin");
+                  navigate("/login");
                 },
               },
             })
