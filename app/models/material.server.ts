@@ -52,7 +52,7 @@ export function createMaterial({
 }: Pick<Material, "title" | "description" | "url"> & {
   userId: User["id"];
   categoryId: Category["id"];
-  filePath?: string;
+  filePath?: string | null;
 }) {
   return prisma.material.create({
     data: {

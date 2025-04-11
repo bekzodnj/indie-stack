@@ -37,7 +37,15 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const formDataCopy = await cloneReq.formData();
   const fileAttachment = formDataCopy.get("fileAttachment") as File | undefined;
 
-  let fileName = fileAttachment?.name.replace(/\s+/g, "_") || "default";
+  console.log("fileAttachment", fileAttachment);
+
+  const isFileAttached =
+    fileAttachment !== null && fileAttachment !== undefined;
+  let fileName = fileAttachment?.name.replace(/\s+/g, "_") || null;
+
+  if (isFileAttached) {
+    fileName = null;
+  }
 
   const pdfUploadHandler = async (fileUpload: FileUpload) => {
     if (
@@ -63,7 +71,9 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     categoryId,
     url: url?.toString() || null,
     userId: user.id,
-    filePath: getStorageKey(user.id, fileName as string),
+    filePath: isFileAttached
+      ? getStorageKey(user.id, fileName as string)
+      : null,
   });
 
   return redirect(`/dashboard`);
