@@ -30,7 +30,7 @@ export default function Layout() {
     <div className="flex h-full min-h-screen flex-col">
       <header className="flex items-center justify-between bg-slate-800 p-4 text-white">
         <h1 className="text-3xl font-bold">
-          <Link to=".">Udenote</Link>
+          <Link to="/">Udenote</Link>
         </h1>
         <p>
           {data.user.name} - {data.user.email}

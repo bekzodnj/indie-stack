@@ -9,134 +9,136 @@ export default function Index() {
   const user = useOptionalUser();
 
   return (
-    <main className="relative min-h-screen bg-[#fdfcfb] sm:flex sm:items-center sm:justify-center">
-      <div className="relative sm:pb-16 sm:pt-8">
-        <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-          <div className="relative shadow-xl sm:overflow-hidden sm:rounded-2xl">
-            <div className="absolute inset-0">
-              <img
-                className="h-full w-full object-cover"
-                src="https://images.unsplash.com/photo-1636412911203-4065623b94fc?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                alt="Sonic Youth On Stage"
-              />
-              <div className="absolute inset-0 bg-[color:rgba(254,204,27,0.5)] mix-blend-multiply" />
-            </div>
-            <div className="relative px-4 pb-8 pt-16 sm:px-6 sm:pb-14 sm:pt-24 lg:px-8 lg:pb-20 lg:pt-32">
-              <h1 className="text-center text-6xl font-extrabold tracking-tight sm:text-8xl lg:text-9xl">
-                <span className="block uppercase text-yellow-500 drop-shadow-md">
-                  Marketplace for Notion pages
-                </span>
-              </h1>
-              <p className="mx-auto mt-6 max-w-lg text-center text-xl text-white sm:max-w-3xl">
-                Check the README.md file for instructions on how to get this
-                project deployed.
-              </p>
-              <div className="mx-auto mt-10 max-w-sm sm:flex sm:max-w-none sm:justify-center">
-                {user ? (
-                  <Link
-                    to="/notes"
-                    className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-yellow-700 shadow-sm hover:bg-yellow-50 sm:px-8"
-                  >
-                    View Notes for {user.email}
-                  </Link>
-                ) : (
-                  <div className="space-y-4 sm:mx-auto sm:inline-grid sm:grid-cols-2 sm:gap-5 sm:space-y-0">
-                    <Link
-                      to="/join"
-                      className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-yellow-700 shadow-sm hover:bg-yellow-50 sm:px-8"
-                    >
-                      Sign up
-                    </Link>
-                    <Link
-                      to="/login"
-                      className="flex items-center justify-center rounded-md bg-yellow-500 px-4 py-3 font-medium text-white hover:bg-yellow-600"
-                    >
-                      Log In
-                    </Link>
-                  </div>
-                )}
-              </div>
-              <a href="https://remix.run">
-                <img
-                  src="https://user-images.githubusercontent.com/1500684/158298926-e45dafff-3544-4b69-96d6-d3bcc33fc76a.svg"
-                  alt="Remix"
-                  className="mx-auto mt-16 w-full max-w-[12rem] md:max-w-[16rem]"
-                />
-              </a>
-            </div>
+    <div className="min-h-screen bg-white">
+      {/* Header/Navigation Bar */}
+      <header className="flex items-center justify-between border-b border-gray-400 px-20 py-5">
+        <div>
+          <h1 className="text-2xl font-bold">Udenote</h1>
+        </div>
+        <div className="flex items-center gap-6">
+          <Link to="./dashboard" className="text-sm text-gray-700">
+            Our story
+          </Link>
+          <a href="." className="text-sm text-gray-700">
+            Search materials
+          </a>
+          <a href="." className="text-sm text-gray-700">
+            Write
+          </a>
+          <a href="." className="text-sm text-gray-700">
+            Sign in
+          </a>
+          <button className="rounded-full bg-black px-4 py-2 text-sm text-white">
+            Get started
+          </button>
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <section className="flex w-full justify-between border-b border-gray-400">
+        <div className="flex px-20 py-10">
+          {/* Left content */}
+          <div className="w-1/2 pr-10">
+            <h1 className="mb-8 font-serif text-8xl font-bold">
+              Marketplace for Notion pages
+            </h1>
+            <p className="mb-8 text-xl text-gray-700">
+              A place to read, write, and share your knowledge
+            </p>
+            <button className="rounded-full bg-black px-8 py-3 font-medium text-white">
+              Discover
+            </button>
           </div>
         </div>
 
-        <div className="mx-auto max-w-7xl px-4 py-2 sm:px-6 lg:px-8">
-          <div className="mt-6 flex flex-wrap justify-center gap-8">
-            {[
-              {
-                src: "https://user-images.githubusercontent.com/1500684/157764397-ccd8ea10-b8aa-4772-a99b-35de937319e1.svg",
-                alt: "Fly.io",
-                href: "https://fly.io",
-              },
-              {
-                src: "https://user-images.githubusercontent.com/1500684/157764395-137ec949-382c-43bd-a3c0-0cb8cb22e22d.svg",
-                alt: "SQLite",
-                href: "https://sqlite.org",
-              },
-              {
-                src: "https://user-images.githubusercontent.com/1500684/157764484-ad64a21a-d7fb-47e3-8669-ec046da20c1f.svg",
-                alt: "Prisma",
-                href: "https://prisma.io",
-              },
-              {
-                src: "https://user-images.githubusercontent.com/1500684/157764276-a516a239-e377-4a20-b44a-0ac7b65c8c14.svg",
-                alt: "Tailwind",
-                href: "https://tailwindcss.com",
-              },
-              {
-                src: "https://user-images.githubusercontent.com/1500684/157764454-48ac8c71-a2a9-4b5e-b19c-edef8b8953d6.svg",
-                alt: "Cypress",
-                href: "https://www.cypress.io",
-              },
-              {
-                src: "https://user-images.githubusercontent.com/1500684/157772386-75444196-0604-4340-af28-53b236faa182.svg",
-                alt: "MSW",
-                href: "https://mswjs.io",
-              },
-              {
-                src: "https://user-images.githubusercontent.com/1500684/157772447-00fccdce-9d12-46a3-8bb4-fac612cdc949.svg",
-                alt: "Vitest",
-                href: "https://vitest.dev",
-              },
-              {
-                src: "https://user-images.githubusercontent.com/1500684/157772662-92b0dd3a-453f-4d18-b8be-9fa6efde52cf.png",
-                alt: "Testing Library",
-                href: "https://testing-library.com",
-              },
-              {
-                src: "https://user-images.githubusercontent.com/1500684/157772934-ce0a943d-e9d0-40f8-97f3-f464c0811643.svg",
-                alt: "Prettier",
-                href: "https://prettier.io",
-              },
-              {
-                src: "https://user-images.githubusercontent.com/1500684/157772990-3968ff7c-b551-4c55-a25c-046a32709a8e.svg",
-                alt: "ESLint",
-                href: "https://eslint.org",
-              },
-              {
-                src: "https://user-images.githubusercontent.com/1500684/157773063-20a0ed64-b9f8-4e0b-9d1e-0b65a3d4a6db.svg",
-                alt: "TypeScript",
-                href: "https://typescriptlang.org",
-              },
-            ].map((img) => (
-              <a
-                key={img.href}
-                href={img.href}
-                className="flex h-16 w-32 justify-center p-1 grayscale transition hover:grayscale-0 focus:grayscale-0"
+        {/* Right illustration */}
+        <div className="relative w-1/3">
+          <div className="absolute inset-0">
+            <div className="relative h-full w-full overflow-hidden">
+              {/* Elegant gradient background */}
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-blue-400"></div>
+
+              {/* Abstract elegant shape */}
+              <svg
+                className="absolute inset-0"
+                width="100%"
+                height="100%"
+                viewBox="0 0 800 600"
+                preserveAspectRatio="xMidYMid slice"
               >
-                <img alt={img.alt} src={img.src} className="object-contain" />
-              </a>
-            ))}
+                {/* Large minimalist circle */}
+                <circle
+                  cx="500"
+                  cy="200"
+                  r="120"
+                  fill="none"
+                  stroke="white"
+                  strokeWidth="2"
+                  opacity="0.8"
+                />
+
+                {/* Small accent circle */}
+                {/* <circle cx="500" cy="200" r="20" fill="white" opacity="0.9" /> */}
+
+                {/* Subtle dots */}
+                <g>
+                  <circle cx="200" cy="400" r="4" fill="white" opacity="0.6" />
+                  <circle cx="300" cy="300" r="3" fill="white" opacity="0.6" />
+                  <circle cx="400" cy="450" r="2" fill="white" opacity="0.6" />
+                  <circle cx="600" cy="350" r="3" fill="white" opacity="0.6" />
+                  <circle cx="700" cy="250" r="4" fill="white" opacity="0.6" />
+                </g>
+              </svg>
+
+              {/* Elegant pen icon at bottom right */}
+              <div className="absolute bottom-8 right-8">
+                <svg viewBox="0 0 100 100" className="h-32 w-32">
+                  <path
+                    d="M70,10 L90,30 L40,80 L10,90 L20,60 L70,10 Z"
+                    fill="none"
+                    stroke="white"
+                    strokeWidth="2"
+                  />
+                  <line
+                    x1="60"
+                    y1="20"
+                    x2="80"
+                    y2="40"
+                    stroke="white"
+                    strokeWidth="1"
+                  />
+                  <circle cx="10" cy="90" r="2" fill="white" />
+                </svg>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </main>
+      </section>
+    </div>
   );
 }
+// <div className="mx-auto mt-10 max-w-sm sm:flex sm:max-w-none sm:justify-center">
+//             {user ? (
+//               <Link
+//                 to="/notes"
+//                 className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-yellow-700 shadow-sm hover:bg-yellow-50 sm:px-8"
+//               >
+//                 View Notes for {user.email}
+//               </Link>
+//             ) : (
+//               <div className="space-y-4 sm:mx-auto sm:inline-grid sm:grid-cols-2 sm:gap-5 sm:space-y-0">
+//                 <Link
+//                   to="/join"
+//                   className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-yellow-700 shadow-sm hover:bg-yellow-50 sm:px-8"
+//                 >
+//                   Sign up
+//                 </Link>
+//                 <Link
+//                   to="/login"
+//                   className="flex items-center justify-center rounded-md bg-yellow-500 px-4 py-3 font-medium text-white hover:bg-yellow-600"
+//                 >
+//                   Log In
+//                 </Link>
+//               </div>
+//             )}
+//           </div>
