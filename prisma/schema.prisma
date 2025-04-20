@@ -40,6 +40,8 @@ model Material {
   filePath          String? //path to file
   fileType          String? // MIME type
   fileSize          Int? // size in bytes
+  price             Float? @default(0) // price in USD
+  isFree            Boolean @default(false) // if true, price is ignored
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 

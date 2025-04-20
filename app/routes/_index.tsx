@@ -16,7 +16,7 @@ export default function Index() {
           <h1 className="text-2xl font-bold">Udenote</h1>
         </div>
         <div className="flex items-center gap-6">
-          <Link to="./dashboard" className="text-sm text-gray-700">
+          <Link to="/dashboard" className="text-sm text-gray-700">
             Our story
           </Link>
           <a href="." className="text-sm text-gray-700">
@@ -25,7 +25,7 @@ export default function Index() {
           <a href="." className="text-sm text-gray-700">
             Write
           </a>
-          <a href="." className="text-sm text-gray-700">
+          <a href="/login" className="text-sm text-gray-700">
             Sign in
           </a>
           <button className="rounded-full bg-black px-4 py-2 text-sm text-white">
@@ -36,31 +36,34 @@ export default function Index() {
 
       {/* Hero Section */}
       <section className="flex w-full justify-between border-b border-gray-400">
-        <div className="flex px-20 py-10">
+        <div className="flex px-32 py-10">
           {/* Left content */}
           <div className="w-1/2 pr-10">
-            <h1 className="mb-8 font-serif text-8xl font-bold">
+            <h1 className="mb-8 font-serif text-5xl font-bold md:text-7xl">
               Marketplace for Notion pages
             </h1>
             <p className="mb-8 text-xl text-gray-700">
               A place to read, write, and share your knowledge
             </p>
-            <button className="rounded-full bg-black px-8 py-3 font-medium text-white">
-              Discover
-            </button>
+            <Link
+              to="/dashboard"
+              className="rounded-full bg-black px-8 py-3 font-medium text-white"
+            >
+              Discover yes
+            </Link>
           </div>
         </div>
 
         {/* Right illustration */}
-        <div className="relative w-1/3">
+        <div className="relative hidden w-1/2 md:block">
           <div className="absolute inset-0">
             <div className="relative h-full w-full overflow-hidden">
               {/* Elegant gradient background */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-blue-400"></div>
+              <div className="absolute inset-0 bg-gradient-to-tr from-blue-600 to-sky-500"></div>
 
               {/* Abstract elegant shape */}
               <svg
-                className="absolute inset-0"
+                className="absolute inset-0 transition-transform duration-500 hover:scale-150"
                 width="100%"
                 height="100%"
                 viewBox="0 0 800 600"
@@ -82,34 +85,15 @@ export default function Index() {
 
                 {/* Subtle dots */}
                 <g>
+                  <circle cx="100" cy="300" r="3" fill="white" opacity="0.6" />
                   <circle cx="200" cy="400" r="4" fill="white" opacity="0.6" />
                   <circle cx="300" cy="300" r="3" fill="white" opacity="0.6" />
                   <circle cx="400" cy="450" r="2" fill="white" opacity="0.6" />
                   <circle cx="600" cy="350" r="3" fill="white" opacity="0.6" />
-                  <circle cx="700" cy="250" r="4" fill="white" opacity="0.6" />
+                  <circle cx="650" cy="250" r="5" fill="white" opacity="0.6" />
+                  <circle cx="150" cy="150" r="5" fill="white" opacity="0.6" />
                 </g>
               </svg>
-
-              {/* Elegant pen icon at bottom right */}
-              <div className="absolute bottom-8 right-8">
-                <svg viewBox="0 0 100 100" className="h-32 w-32">
-                  <path
-                    d="M70,10 L90,30 L40,80 L10,90 L20,60 L70,10 Z"
-                    fill="none"
-                    stroke="white"
-                    strokeWidth="2"
-                  />
-                  <line
-                    x1="60"
-                    y1="20"
-                    x2="80"
-                    y2="40"
-                    stroke="white"
-                    strokeWidth="1"
-                  />
-                  <circle cx="10" cy="90" r="2" fill="white" />
-                </svg>
-              </div>
             </div>
           </div>
         </div>
@@ -117,28 +101,3 @@ export default function Index() {
     </div>
   );
 }
-// <div className="mx-auto mt-10 max-w-sm sm:flex sm:max-w-none sm:justify-center">
-//             {user ? (
-//               <Link
-//                 to="/notes"
-//                 className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-yellow-700 shadow-sm hover:bg-yellow-50 sm:px-8"
-//               >
-//                 View Notes for {user.email}
-//               </Link>
-//             ) : (
-//               <div className="space-y-4 sm:mx-auto sm:inline-grid sm:grid-cols-2 sm:gap-5 sm:space-y-0">
-//                 <Link
-//                   to="/join"
-//                   className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-yellow-700 shadow-sm hover:bg-yellow-50 sm:px-8"
-//                 >
-//                   Sign up
-//                 </Link>
-//                 <Link
-//                   to="/login"
-//                   className="flex items-center justify-center rounded-md bg-yellow-500 px-4 py-3 font-medium text-white hover:bg-yellow-600"
-//                 >
-//                   Log In
-//                 </Link>
-//               </div>
-//             )}
-//           </div>

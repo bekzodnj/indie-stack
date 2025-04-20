@@ -32,6 +32,7 @@
     "@mantine/tiptap": "^7.15.2",
     "@mjackson/file-storage": "^0.6.1",
     "@mjackson/form-data-parser": "^0.7.0",
+    "@polar-sh/better-auth": "^0.1.0",
     "@prisma/client": "^6.5.0",
     "@react-router/node": "^7.3.0",
     "@react-router/serve": "^7.3.0",
