@@ -10,6 +10,7 @@ const formatUrl = (url: string) => {
   }
   return url;
 };
+
 export async function loader({ params, request }: Route.LoaderArgs) {
   const user = await requireUserIdWithRedirect(request);
   const material = await getMaterial({
@@ -58,6 +59,10 @@ export default function MaterialDetails({ loaderData }: Route.ComponentProps) {
             Visit Resource
           </a>
         ) : null}
+
+        <a href="/api/checkout?productId=f151afd5-56df-4cf4-ac7f-c4b6b67f095f&customerId=customerId">
+          Checkout
+        </a>
       </Card>
     </>
   );

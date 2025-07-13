@@ -10,7 +10,7 @@ export default function Index() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Header/Navigation Bar */}
+      {/* Nav Bar */}
       <header className="flex items-center justify-between border-b border-gray-400 px-20 py-5">
         <div>
           <h1 className="text-2xl font-bold">Udenote</h1>

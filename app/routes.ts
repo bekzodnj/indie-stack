@@ -30,4 +30,5 @@ export default [
   route("healthcheck", "routes/healthcheck.tsx"),
 
   route("api/auth/*", "routes/api/auth.tsx"),
+  route("api/checkout/*", "api/checkout.tsx"),
 ] satisfies RouteConfig;
