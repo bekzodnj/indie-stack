@@ -1,103 +1,124 @@
 import type { MetaFunction } from "react-router";
 import { Link } from "react-router";
 
-import { useOptionalUser } from "~/utils";
-
 export const meta: MetaFunction = () => [{ title: "Remix Notes" }];
 
 export default function Index() {
-  const user = useOptionalUser();
-
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white pt-16">
       {/* Nav Bar */}
-      <header className="flex items-center justify-between border-b border-gray-400 px-20 py-5">
-        <div>
-          <h1 className="text-2xl font-bold">Udenote</h1>
-        </div>
-        <div className="flex items-center gap-6">
-          <Link to="/dashboard" className="text-sm text-gray-700">
-            Our story
-          </Link>
-          <a href="." className="text-sm text-gray-700">
-            Search materials
-          </a>
-          <a href="." className="text-sm text-gray-700">
-            Write
-          </a>
-          <a href="/login" className="text-sm text-gray-700">
-            Sign in
-          </a>
-          <button className="rounded-full bg-black px-4 py-2 text-sm text-white">
-            Get started
-          </button>
-        </div>
-      </header>
-
-      {/* Hero Section */}
-      <section className="flex w-full justify-between border-b border-gray-400">
-        <div className="flex px-32 py-10">
-          {/* Left content */}
-          <div className="w-1/2 pr-10">
-            <h1 className="mb-8 font-serif text-5xl font-bold md:text-7xl">
-              Marketplace for Notion pages
-            </h1>
-            <p className="mb-8 text-xl text-gray-700">
-              A place to read, write, and share your knowledge
-            </p>
-            <Link
-              to="/dashboard"
-              className="rounded-full bg-black px-8 py-3 font-medium text-white"
+      <nav className="fixed top-0 z-10 w-full border-b border-gray-400 bg-white/80 backdrop-blur-md">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex h-20 items-center justify-between">
+            <h1
+              className="text-4xl font-light tracking-wider text-gray-900"
+              suppressHydrationWarning
             >
-              Discover yes
-            </Link>
-          </div>
-        </div>
-
-        {/* Right illustration */}
-        <div className="relative hidden w-1/2 md:block">
-          <div className="absolute inset-0">
-            <div className="relative h-full w-full overflow-hidden">
-              {/* Elegant gradient background */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-blue-600 to-sky-500"></div>
-
-              {/* Abstract elegant shape */}
-              <svg
-                className="absolute inset-0 transition-transform duration-500 hover:scale-150"
-                width="100%"
-                height="100%"
-                viewBox="0 0 800 600"
-                preserveAspectRatio="xMidYMid slice"
+              Udenote
+            </h1>
+            <div className="flex space-x-10">
+              <Link
+                to="/dashboard"
+                className="text-xl font-light text-gray-600 transition duration-300 hover:text-gray-900"
               >
-                {/* Large minimalist circle */}
-                <circle
-                  cx="500"
-                  cy="200"
-                  r="120"
-                  fill="none"
-                  stroke="white"
-                  strokeWidth="2"
-                  opacity="0.8"
-                />
-
-                {/* Small accent circle */}
-                {/* <circle cx="500" cy="200" r="20" fill="white" opacity="0.9" /> */}
-
-                {/* Subtle dots */}
-                <g>
-                  <circle cx="100" cy="300" r="3" fill="white" opacity="0.6" />
-                  <circle cx="200" cy="400" r="4" fill="white" opacity="0.6" />
-                  <circle cx="300" cy="300" r="3" fill="white" opacity="0.6" />
-                  <circle cx="400" cy="450" r="2" fill="white" opacity="0.6" />
-                  <circle cx="600" cy="350" r="3" fill="white" opacity="0.6" />
-                  <circle cx="650" cy="250" r="5" fill="white" opacity="0.6" />
-                  <circle cx="150" cy="150" r="5" fill="white" opacity="0.6" />
-                </g>
-              </svg>
+                Home
+              </Link>
+              <Link
+                to="/materials"
+                className="text-xl font-light text-gray-600 transition duration-300 hover:text-gray-900"
+              >
+                Search materials
+              </Link>
+              <Link
+                to="/create"
+                className="text-xl font-light text-gray-600 transition duration-300 hover:text-gray-900"
+              >
+                Create
+              </Link>
+              <a
+                href="/login"
+                className="text-xl font-light text-gray-600 transition duration-300 hover:text-gray-900"
+              >
+                Sign In
+              </a>
+              <a
+                href="#contact"
+                className="text-xl font-light text-gray-600 transition duration-300 hover:text-gray-900"
+              >
+                Contact
+              </a>
             </div>
           </div>
         </div>
+      </nav>
+
+      {/* Hero Section */}
+      <section
+        id="home"
+        className="flex basis-10 items-center justify-center border-b border-gray-400 px-40 py-52"
+        style={{ backgroundColor: "rgb(247, 247, 247)" }}
+      >
+        <div className="mx-auto max-w-2xl px-4 text-center">
+          <h2 className="mb-6 text-5xl font-light tracking-tight text-gray-900">
+            Marketplace for Notion pages
+          </h2>
+          <p className="mb-8 text-lg text-gray-600">
+            A place to read, write, and share your knowledge
+          </p>
+          <a
+            href="#contact"
+            className="inline-block rounded-md bg-[#303335] px-8 py-3 text-white transition duration-300 hover:bg-[#242628]"
+            style={{ borderRadius: "6px" }}
+          >
+            Get Started
+          </a>
+        </div>
       </section>
+
+      <section
+        id="about"
+        className="border-b border-gray-400 py-20"
+        style={{ backgroundColor: "#f0f8ff" }}
+      >
+        <div className="mx-auto max-w-4xl px-4 text-center">
+          <h3 className="mb-6 text-3xl font-light text-gray-900">About Us</h3>
+          <p className="text-lg leading-relaxed text-gray-600">
+            We believe in the power of minimalism. Our mission is to create
+            experiences that are intuitive, beautiful, and timeless. Every
+            element is carefully crafted to ensure clarity and purpose, leaving
+            a lasting impression.
+          </p>
+        </div>
+      </section>
+
+      <footer className="bg-gray-900 py-12 text-center text-white">
+        <div className="mx-auto max-w-7xl px-4">
+          <div className="mb-8 flex justify-center space-x-8">
+            <a
+              href="/"
+              className="text-sm text-gray-400 transition duration-300 hover:text-white"
+            >
+              About Us
+            </a>
+            <a
+              href="#privacy"
+              className="text-sm text-gray-400 transition duration-300 hover:text-white"
+            >
+              Privacy Policy
+            </a>
+            <a
+              href="#terms"
+              className="text-sm text-gray-400 transition duration-300 hover:text-white"
+            >
+              Terms of Service
+            </a>
+          </div>
+          <p className="text-5xl font-light tracking-wider text-white/10">
+            Udenote
+          </p>
+          <p className="mt-4 text-sm text-gray-400">© 2025 Udenote.</p>
+        </div>
+      </footer>
     </div>
   );
 }

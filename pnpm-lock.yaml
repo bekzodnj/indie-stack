@@ -68,6 +68,9 @@ importers:
       isbot:
         specifier: ^5.1.17
         version: 5.1.25
+      opengraph-react:
+        specifier: ^2.4.2
+        version: 2.4.2(react@18.3.1)
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -3645,6 +3648,11 @@ packages:
   onetime@5.1.2:
     resolution: {integrity: sha512-kbpaSSGJTWdAY5KPVeMOKXSrPtr8C8C7wodJbcsd51jRnmD+GZu8Y0VoU6Dm5Z4vWr0Ig/1NKuWRKf7j5aaYSg==}
     engines: {node: '>=6'}
+
+  opengraph-react@2.4.2:
+    resolution: {integrity: sha512-J5DjoTUyI6i1MFSguGVhmNqByvMqBbRE/PezihjWZKb+hAhk7hShkUBmXTv1LMYMDfZ89d1VqYxwTgOV9CRNvQ==}
+    peerDependencies:
+      react: ^18.0.0
 
   optionator@0.9.4:
     resolution: {integrity: sha512-6IpQ7mKUxRcZNLIObR0hz7lxsapSSIYNZJwXPGeF0mTVqGKFIXj1DQcMoT22S3ROcLyY/rz0PWaWZ9ayWmad9g==}
@@ -8785,6 +8793,11 @@ snapshots:
   onetime@5.1.2:
     dependencies:
       mimic-fn: 2.1.0
+
+  opengraph-react@2.4.2(react@18.3.1):
+    dependencies:
+      psl: 1.15.0
+      react: 18.3.1
 
   optionator@0.9.4:
     dependencies:
